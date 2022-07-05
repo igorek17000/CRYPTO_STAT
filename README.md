@@ -1,4 +1,4 @@
-# TALOS TERMINAL
+# CRYPTO - STAT
 
 [![Python 3.6](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/release/python-380//)
 [![License: GPL](https://img.shields.io/badge/License-GPL-yellow.svg)](https://opensource.org/licenses/GPL-3.0)
