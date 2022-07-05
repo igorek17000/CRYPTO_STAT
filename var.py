@@ -2,28 +2,10 @@
 from rich.traceback import install
 from dataclasses import dataclass
 from binance.um_futures import UMFutures
-import pathlib
-from pathlib import Path
 
 install(show_locals=True)
 
 futures = UMFutures()
-    
-@dataclass
-class FILECONF:
-    name_path : str = Path(pathlib.Path.cwd(), 'configuration.ini')
-    sections = [
-        "API_KEY",
-        "TICKERS",
-        "TIME_FRAME",
-        "FUNC_OPTION"
-    ]
-    section_keys = {
-        "API_KEY" : ["Public", "Secret"],
-        "TICKERS" : ["List"],
-        "TIME_FRAME" : ["List"],
-        "FUNC_OPTION" : ["FuncList", "FuncName"]
-    }
     
     
 @dataclass
