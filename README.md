@@ -4,6 +4,9 @@
 [![License: GPL](https://img.shields.io/badge/License-GPL-yellow.svg)](https://opensource.org/licenses/GPL-3.0)
 [![PyPI version](https://badge.fury.io/py/rich.svg)](https://badge.fury.io/py/rich)
 
+<!---![Logo](https://github.com/straniks/Talos_Ver_0.1/blob/main/images/talos.png)-->
+
+
 Данный терминал разрабатывается на Python для анализа и торговли на крипто биржах для ОС Linux.
 
 Код терминала базируется на REST API BINANCE [Binance Futures public API](https://binance-docs.github.io/apidocs/futures/en/)
@@ -43,6 +46,29 @@ pip install prettytable
 pip install art
 pip install matplotlib
 ```
+---
+
+### Текущие возможности
+- На текущем этапе разработки, терминал выполняет следующие функции:
+	- Подключение к бирже;
+	- Создание дампа тикеров;
+	- Сбор информации по тикеру, таймфрейму;
+	- Запись собранной информации в текстовый файл;
+	- Генерация графиков на основе собранных данных с последующим сохранением;
+
+### План лист
+- Планируется добавить GUI
+- Вывод Live Chart инструмента
+- Вывод графиков на основе собранных данных в виджет GUI
+- Добавление формул для пересчета данных
+- Сохранение собранных данных в exel таблицу с автоматическим добавлением формул для пересчета
+- Добавление панели для торговли
+- Разделения потокв(Получения данных с одной биржи, а торговля на другой)
+- Создание бинарных файлов, для упрощения установки и работы терминала
+
+---
+
+![Features](https://github.com/straniks/Talos_Ver_0.1/blob/main/images/main.svg)
 
 ---
 
