@@ -2,7 +2,6 @@
 
 [![Python 3.6](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/release/python-380//)
 [![License: GPL](https://img.shields.io/badge/License-GPL-yellow.svg)](https://opensource.org/licenses/GPL-3.0)
-[![PyPI version](https://badge.fury.io/py/rich.svg)](https://badge.fury.io/py/rich)
 
 <!---![Logo](https://github.com/straniks/Talos_Ver_0.1/blob/main/images/talos.png)-->
 
