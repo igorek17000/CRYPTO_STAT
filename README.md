@@ -1,10 +1,8 @@
 # CRYPTO - STAT
 
 [![Python 3.6](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/release/python-380//)
-[![License: GPL](https://img.shields.io/badge/License-GPL-blue.svg)](https://opensource.org/licenses/GPL-3.0)
 [![PyPi 22.1.2](https://img.shields.io/badge/PyPi-22.1.2-blue.svg)](https://img.shields.io/badge/PyPi-22.1.2-blue)
-
-<!---![Logo](https://github.com/straniks/Talos_Ver_0.1/blob/main/images/talos.png)-->
+[![License: GPL](https://img.shields.io/badge/License-GPL-blue.svg)](https://opensource.org/licenses/GPL-3.0)
 
 
 CRYPTO - STAT является модулем от терминал TALOS который разрабатывается на Python для анализа и торговли на крипто биржах для Unix* ОС.
