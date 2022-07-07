@@ -44,13 +44,13 @@ class SysExit:
     locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 
     @classmethod
-    def sigint_handler(self, signal, frame) -> None:
+    def sigint_handler(cls, signal, frame) -> None:
         print("\nExit")
         sys.exit(0)
 
     @classmethod
-    def exit_key(self) -> None:
-        signal.signal(signal.SIGINT, self.sigint_handler)
+    def exit_key(cls) -> None:
+        signal.signal(signal.SIGINT, cls.sigint_handler)
 
 
 class Patch:
@@ -126,6 +126,8 @@ class RequestList:
 class WriteDataFile:
     @staticmethod
     def write_taker_long_short_ratio(response: list, ticker: str, timeframe: str) -> None:
+        date = ""
+        time = ""
         table = PrettyTable()
         table.field_names = ['Buy Sell Ratio', 'Buy Vol', 'Sell Vol', 'Date', 'Time', 'Ticker', 'TF']
 
@@ -158,6 +160,8 @@ class WriteDataFile:
 
     @staticmethod
     def write_long_short_position_ratio(response: list, ticker: str, timeframe: str) -> None:
+        date = ""
+        time = ""
         table = PrettyTable()
         table.field_names = ['Long Account', 'Short Account', 'Long Short Ratio', 'Date', 'Time', 'Ticker', 'TF']
 
@@ -191,6 +195,8 @@ class WriteDataFile:
 
     @staticmethod
     def write_long_short_account_ratio(response: list, ticker: str, timeframe: str) -> None:
+        date = ""
+        time = ""
         table = PrettyTable()
         table.field_names = ['Long Account', 'Short Account', 'Long Short Ratio', 'Date', 'Time', 'Ticker', 'TF']
 
@@ -224,6 +230,8 @@ class WriteDataFile:
 
     @staticmethod
     def write_open_interest_hist(response: list, ticker: str, timeframe: str):
+        date = ""
+        time = ""
         table = PrettyTable()
         table.field_names = ['Sum Open Interest', 'Sum Open Interest Value', 'Date', 'Time', 'Ticker', 'TF']
 
