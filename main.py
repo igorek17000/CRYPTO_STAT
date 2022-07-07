@@ -8,38 +8,40 @@
 # ---------------------------------------------------
 from rich.traceback import install
 import lib
-from var import GLOSSARY
-from var import SERVICE
-from var import COIN_QUERY
+from var import GlossaryOutput
+from var import Service
+from var import CoinQuery
 from colorama import Fore
 
 install(show_locals=True)
 
 
 def main():
-    lib.SYS_EXIT.exit_key()
+    lib.SysExit.exit_key()
 
-    lib.UI_LOGO.print_logo()
+    lib.LogoPrint.logo()
     
-    print(Fore.CYAN + "\n" + GLOSSARY.SERVER_TIME + Fore.GREEN + lib.DataExchange.get_server_time())
+    print(Fore.CYAN + "\n" + GlossaryOutput.SERVER_TIME + Fore.GREEN + lib.ServerGetData.get_server_time())
     
-    print(Fore.MAGENTA + "\n" + GLOSSARY.DUMP_TICKERS + "...")
-    lib.DataExchange.dump_ticker()
+    print(Fore.MAGENTA + "\n" + GlossaryOutput.DUMP_TICKERS + "...")
+    lib.ServerGetData.dump_ticker()
     
     while True:
-        print(Fore.BLUE + "\n" + GLOSSARY.QUERY_TICKER)
-        lib.GET_USER_DATA.get_ticker()
+        print(Fore.BLUE + "\n" + GlossaryOutput.QUERY_TICKER)
+        lib.UserInput.get_ticker()
+
+        tf = lib.Covert.list_str(convert_list=Service.TimeFrameList)
+
+        print(Fore.BLUE + "\n" + GlossaryOutput.QUERY_TF + "\n\n" + tf)
+        lib.UserInput.get_time_frame()
         
-        print(Fore.BLUE + "\n" + GLOSSARY.QUERY_TF + "\n\n" + lib.CONVERT.list_str(convert_list=SERVICE.TimeFrameList))
-        lib.GET_USER_DATA.get_time_frame()
+        print(Fore.BLUE + "\n" + GlossaryOutput.QUERY_REQUEST + " " + CoinQuery.ticker + "?\n")
+        lib.RequestList.printl()
+        lib.UserInput.get_number()
         
-        print(Fore.BLUE + "\n" + GLOSSARY.QUERY_REQUEST + " " + COIN_QUERY.ticker + "?\n")
-        lib.REQUEST_LIST.printl()
-        lib.GET_USER_DATA.get_number()
+        lib.ServerGetData.request_data(number_request=Service.NumberRequest)
         
-        lib.DataExchange.request_data(number_request=SERVICE.NumberRequest)
-        
-        lib.GET_WRITE_METHOD.get_method(number_request=SERVICE.NumberRequest)
+        lib.GetWriteMethod.get_method(number_request=Service.NumberRequest)
       
         
 if __name__ == "__main__":

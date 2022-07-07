@@ -1,5 +1,4 @@
 # coding:utf-8
-from dataclasses import dataclass
 from rich.traceback import install
 from binance.um_futures import UMFutures
 from datetime import datetime
@@ -20,108 +19,113 @@ install(show_locals=True)
 futures = UMFutures()
 
 
-class DataExchange:
-    @staticmethod
-    def dump_ticker():
-        for items in futures.exchange_info()[var.QUERY_KEY.exch_info]:
-            var.COIN_QUERY.list_tickers.append(items[var.QUERY_KEY.exch_info_items])
-        
-        
+class ServerGetData:
     @staticmethod
     def get_server_time():
-        return str(datetime.fromtimestamp(futures.time()[var.QUERY_KEY.server_time] / 1000))[:-7]
-    
-    
+        return str(datetime.fromtimestamp(futures.time()[var.QueryKey.server_time] / 1000))[:-7]
+
     @staticmethod
-    def request_data(number_request : int):
-        RequestName = var.SERVICE.RequestName[number_request - 1]
-        var.COIN_QUERY.response = RequestName(symbol = var.COIN_QUERY.ticker, period = var.COIN_QUERY.time_frame, limit = var.COIN_QUERY.limit)
-    
-        
-class SYS_EXIT:
+    def request_data(number_request: int) -> None:
+        request_name = var.Service.RequestName[number_request - 1]
+
+        ticker = var.CoinQuery.ticker
+        tf = var.CoinQuery.time_frame
+        limit = var.CoinQuery.limit
+
+        var.CoinQuery.response = request_name(symbol=ticker, period=tf, limit=limit)
+
+    @staticmethod
+    def dump_ticker() -> None:
+        for items in futures.exchange_info()[var.QueryKey.exch_info]:
+            var.CoinQuery.list_tickers.append(items[var.QueryKey.exch_info_items])
+
+
+class SysExit:
     locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 
     @classmethod
-    def sigint_handler(self, signal, frame):
+    def sigint_handler(self, signal, frame) -> None:
         print("\nExit")
         sys.exit(0)
 
     @classmethod
-    def exit_key(self):
+    def exit_key(self) -> None:
         signal.signal(signal.SIGINT, self.sigint_handler)
 
 
-class PATCH:
+class Patch:
     @staticmethod
-    def create_folder(name_folder : str):
+    def create_folder(name_folder: str) -> None:
         folder = Path(pathlib.Path.cwd(), 'report', 'data', name_folder)
         if not os.path.isdir(folder):
             os.mkdir(folder)    
  
     
-class CONVERT:
+class Covert:
     @staticmethod
-    def list_str(convert_list : list):
+    def list_str(convert_list: list):
         return ' '.join(map(str, convert_list)) 
     
     
-class UI_LOGO:
+class LogoPrint:
     @staticmethod
-    def print_logo():
+    def logo() -> None:
         print(Fore.RED + Style.BRIGHT)
-        tprint(var.MODULE_NAME.name, font=var.MODULE_NAME.font)
+        tprint(var.ModuleName.name, font=var.ModuleName.font)
 
 
-class GET_USER_DATA:
+class UserInput:
     @staticmethod
     def get_ticker():
-        while True:            
-            var.COIN_QUERY.ticker = input(Fore.CYAN + "\n" + var.GLOSSARY.INPUT_TICKER + Fore.GREEN).upper() + var.COIN_QUERY.coin_pref
+        while True:
+            msg = var.GlossaryOutput.INPUT_TICKER
+
+            var.CoinQuery.ticker = input(Fore.CYAN + "\n" + msg + Fore.GREEN).upper() + var.CoinQuery.coin_pref
             
-            if var.COIN_QUERY.list_tickers.count(var.COIN_QUERY.ticker) == 1:
-                return var.COIN_QUERY.ticker
+            if var.CoinQuery.list_tickers.count(var.CoinQuery.ticker) == 1:
                 break
             else:
-                print(Fore.RED + "\n" + var.GLOSSARY.ERROR_PARAM)
-    
-    
+                print(Fore.RED + "\n" + var.GlossaryOutput.ERROR_PARAM)
+
+        return var.CoinQuery.ticker
+
     @staticmethod
     def get_time_frame():
         while True:            
-            var.COIN_QUERY.time_frame = input(Fore.CYAN + "\n" + var.GLOSSARY.INPUT_TF + Fore.GREEN)
+            var.CoinQuery.time_frame = input(Fore.CYAN + "\n" + var.GlossaryOutput.INPUT_TF + Fore.GREEN)
             
-            if var.SERVICE.TimeFrameList.count(var.COIN_QUERY.time_frame) == 1:
-                return var.COIN_QUERY.time_frame
+            if var.Service.TimeFrameList.count(var.CoinQuery.time_frame) == 1:
                 break
             else:
-                print(Fore.RED + "\n" + var.GLOSSARY.ERROR_PARAM)    
-                
+                print(Fore.RED + "\n" + var.GlossaryOutput.ERROR_PARAM)
+
+        return var.CoinQuery.time_frame
 
     @staticmethod
-    def get_number():
+    def get_number() -> None:
         while True:
-            var.SERVICE.NumberRequest = input(Fore.CYAN + "\n" + var.GLOSSARY.INPUT_NUM_REQ + Fore.GREEN)
-            number = var.SERVICE.NumberRequest
+            var.Service.NumberRequest = input(Fore.CYAN + "\n" + var.GlossaryOutput.INPUT_NUM_REQ + Fore.GREEN)
+            number = var.Service.NumberRequest
             
-            if number.isdigit() and int(number) != 0 and int(number) <= var.SERVICE.CountRequest:
-                var.SERVICE.NumberRequest = int(number)
+            if number.isdigit() and int(number) != 0 and int(number) <= var.Service.CountRequest:
+                var.Service.NumberRequest = int(number)
                 break
             else:
-                print(Fore.RED + "\n" + var.GLOSSARY.ERROR_PARAM)
+                print(Fore.RED + "\n" + var.GlossaryOutput.ERROR_PARAM)
     
                 
-class REQUEST_LIST:
+class RequestList:
     @staticmethod
-    def printl():
-        for index_1, index_2 in enumerate(var.SERVICE.RequestOptions):
-            var.SERVICE.CountRequest += 1
+    def printl() -> None:
+        for index_1, index_2 in enumerate(var.Service.RequestOptions):
+            var.Service.CountRequest += 1
             
-            print("{a:d} : {b:6s}".format(a = index_1 + 1, b = index_2))
+            print("{a:d} : {b:6s}".format(a=index_1 + 1, b=index_2))
 
                 
-class WRITE_DATA_FILE:
+class WriteDataFile:
     @staticmethod
-    def write_taker_long_short_ratio(response : list, ticker : str, timeframe : str):        
+    def write_taker_long_short_ratio(response: list, ticker: str, timeframe: str) -> None:
         table = PrettyTable()
         table.field_names = ['Buy Sell Ratio', 'Buy Vol', 'Sell Vol', 'Date', 'Time', 'Ticker', 'TF']
 
@@ -129,8 +133,8 @@ class WRITE_DATA_FILE:
             date = str(datetime.fromtimestamp(int(response[items]['timestamp']) / 1000))[:-9]
             time = str(datetime.fromtimestamp(int(response[items]['timestamp']) / 1000))[11:]
 
-            buy_vol = locale.format('%d', int(response[items]['buyVol'][:-5]), grouping=True)
-            sell_vol = locale.format('%d', int(response[items]['sellVol'][:-5]), grouping=True)
+            buy_vol = locale.format_string('%d', int(response[items]['buyVol'][:-5]), grouping=True)
+            sell_vol = locale.format_string('%d', int(response[items]['sellVol'][:-5]), grouping=True)
 
             table.add_rows(
                 [
@@ -138,23 +142,22 @@ class WRITE_DATA_FILE:
                 ]
             )
         
-        DateTime = date + " " + time + " "
-        NameTicker = ticker + " "
-        Timeframe = timeframe + " "
-        PreName = "Taker long short ratio "
-        FileName = PreName + NameTicker + DateTime + Timeframe
+        date_time = date + " " + time + " "
+        name_ticker = ticker + " "
+        time_frame = timeframe + " "
+        pre_name = "Taker long short ratio "
+        file_name = pre_name + name_ticker + date_time + time_frame
         
-        print(Fore.GREEN+Style.BRIGHT+"\nWrite " + FileName + "\n")
+        print(Fore.GREEN+Style.BRIGHT+"\nWrite " + file_name + "\n")
         print(table)
 
-        PATCH.create_folder(date)
+        Patch.create_folder(date)
         
-        with open(Path(pathlib.Path.cwd(), 'report', 'data', date, FileName), 'w') as fp:
+        with open(Path(pathlib.Path.cwd(), 'report', 'data', date, file_name), 'w') as fp:
             fp.write(str(table) + '\n')
-            
-            
+
     @staticmethod
-    def write_long_short_position_ratio(response : list, ticker : str, timeframe : str):
+    def write_long_short_position_ratio(response: list, ticker: str, timeframe: str) -> None:
         table = PrettyTable()
         table.field_names = ['Long Account', 'Short Account', 'Long Short Ratio', 'Date', 'Time', 'Ticker', 'TF']
 
@@ -164,27 +167,30 @@ class WRITE_DATA_FILE:
 
             table.add_rows(
                 [
-                    [response[items]['longAccount'], response[items]['shortAccount'], response[items]['longShortRatio'], date, time, ticker, timeframe],
+                    [
+                        response[items]['longAccount'],
+                        response[items]['shortAccount'],
+                        response[items]['longShortRatio'],
+                        date, time, ticker, timeframe],
                 ]
             )
         
-        DateTime = date + " " + time + " "
-        NameTicker = ticker + " "
-        Timeframe = timeframe + " "
-        PreName = "Long short position ratio "
-        FileName = PreName + NameTicker + DateTime + Timeframe
+        date_time = date + " " + time + " "
+        name_ticker = ticker + " "
+        time_frame = timeframe + " "
+        pre_name = "Long short position ratio "
+        file_name = pre_name + name_ticker + date_time + time_frame
 
-        print(Fore.GREEN+Style.BRIGHT+"\nWrite " + FileName + "\n")
+        print(Fore.GREEN+Style.BRIGHT+"\nWrite " + file_name + "\n")
         print(table)
 
-        PATCH.create_folder(date)
+        Patch.create_folder(date)
         
-        with open(Path(pathlib.Path.cwd(), 'report', 'data', date, FileName), 'w') as fp:
+        with open(Path(pathlib.Path.cwd(), 'report', 'data', date, file_name), 'w') as fp:
             fp.write(str(table) + '\n')
-            
-            
+
     @staticmethod
-    def write_long_short_account_ratio(response : list, ticker : str, timeframe : str):
+    def write_long_short_account_ratio(response: list, ticker: str, timeframe: str) -> None:
         table = PrettyTable()
         table.field_names = ['Long Account', 'Short Account', 'Long Short Ratio', 'Date', 'Time', 'Ticker', 'TF']
 
@@ -194,27 +200,30 @@ class WRITE_DATA_FILE:
 
             table.add_rows(
                 [
-                    [response[items]['longAccount'], response[items]['shortAccount'], response[items]['longShortRatio'], date, time, ticker, timeframe],
+                    [
+                        response[items]['longAccount'],
+                        response[items]['shortAccount'],
+                        response[items]['longShortRatio'],
+                        date, time, ticker, timeframe],
                 ]
             )
         
-        DateTime = date + " " + time + " "
-        NameTicker = ticker + " "
-        Timeframe = timeframe + " "
-        PreName = "Long short account ratio "
-        FileName = PreName + NameTicker + DateTime + Timeframe
+        date_time = date + " " + time + " "
+        name_ticker = ticker + " "
+        time_frame = timeframe + " "
+        pre_name = "Long short account ratio "
+        file_name = pre_name + name_ticker + date_time + time_frame
 
-        print(Fore.GREEN+Style.BRIGHT+"\nWrite " + FileName + "\n")
+        print(Fore.GREEN+Style.BRIGHT+"\nWrite " + file_name + "\n")
         print(table)
 
-        PATCH.create_folder(date)
+        Patch.create_folder(date)
         
-        with open(Path(pathlib.Path.cwd(), 'report', 'data', date, FileName), 'w') as fp:
+        with open(Path(pathlib.Path.cwd(), 'report', 'data', date, file_name), 'w') as fp:
             fp.write(str(table) + '\n')
-            
-            
+
     @staticmethod
-    def write_open_interest_hist(response : list, ticker : str, timeframe : str):
+    def write_open_interest_hist(response: list, ticker: str, timeframe: str):
         table = PrettyTable()
         table.field_names = ['Sum Open Interest', 'Sum Open Interest Value', 'Date', 'Time', 'Ticker', 'TF']
 
@@ -222,8 +231,8 @@ class WRITE_DATA_FILE:
             date = str(datetime.fromtimestamp(int(response[items]['timestamp']) / 1000))[:-9]
             time = str(datetime.fromtimestamp(int(response[items]['timestamp']) / 1000))[11:]
 
-            sum_oi = locale.format('%d', int(response[items]['sumOpenInterest'][:-9]), grouping=True)
-            sum_oi_val = locale.format('%d', int(response[items]['sumOpenInterestValue'][:-9]), grouping=True)
+            sum_oi = locale.format_string('%d', int(response[items]['sumOpenInterest'][:-9]), grouping=True)
+            sum_oi_val = locale.format_string('%d', int(response[items]['sumOpenInterestValue'][:-9]), grouping=True)
 
             table.add_rows(
                 [
@@ -231,34 +240,34 @@ class WRITE_DATA_FILE:
                 ]
             )
         
-        DateTime = date + " " + time + " "
-        NameTicker = ticker + " "
-        Timeframe = timeframe + " "
-        PreName = "Open interest hist "
-        FileName = PreName + NameTicker + DateTime + Timeframe
+        date_time = date + " " + time + " "
+        name_ticker = ticker + " "
+        time_frame = timeframe + " "
+        pre_name = "Open interest hist "
+        file_name = pre_name + name_ticker + date_time + time_frame
 
-        print(Fore.GREEN+Style.BRIGHT+"\nWrite " + FileName + "\n")
+        print(Fore.GREEN+Style.BRIGHT+"\nWrite " + file_name + "\n")
         print(table)
 
-        PATCH.create_folder(date)
+        Patch.create_folder(date)
         
-        with open(Path(pathlib.Path.cwd(), 'report', 'data', date, FileName), 'w') as fp:
+        with open(Path(pathlib.Path.cwd(), 'report', 'data', date, file_name), 'w') as fp:
             fp.write(str(table) + '\n')
             
     
 @dataclass
-class WRITE_METHOD:
+class WriteMethod:
     Method = [
-        WRITE_DATA_FILE.write_taker_long_short_ratio,
-        WRITE_DATA_FILE.write_long_short_position_ratio,
-        WRITE_DATA_FILE.write_long_short_account_ratio,
-        WRITE_DATA_FILE.write_open_interest_hist
+        WriteDataFile.write_taker_long_short_ratio,
+        WriteDataFile.write_long_short_position_ratio,
+        WriteDataFile.write_long_short_account_ratio,
+        WriteDataFile.write_open_interest_hist
     ]  
          
 
-class GET_WRITE_METHOD:
+class GetWriteMethod:
     @staticmethod
-    def get_method(number_request : int):
-        write_request = WRITE_METHOD.Method[number_request - 1]
-        write_request(response=var.COIN_QUERY.response, ticker=var.COIN_QUERY.ticker, timeframe=var.COIN_QUERY.time_frame)
+    def get_method(number_request: int):
+        write_request = WriteMethod.Method[number_request - 1]
+        write_request(response=var.CoinQuery.response, ticker=var.CoinQuery.ticker, timeframe=var.CoinQuery.time_frame)
           
